@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1.1">
+<procedure name="main">
+<interface/>
+<body>
+<c></c>
+<c>* Image Check</c>
+<l as_id="image_acquisition" as_name="Image Acquisition 01" as_grp="[2,1]" as_ord="1">    read_image (ImageChk, '../../Picture/ngtest2.tif')</l>
+<c></c>
+<l>shot :=2</l>
+<c></c>
+<c>* getRegionMaster</c>
+<c></c>
+<l>get_region_master (ROI_Rot, RegionsOfInterest, ImageRef, shot)</l>
+<c></c>
+<c>* end</c>
+<c></c>
+<c>*inspect_defect</c>
+<c></c>
+<l>inspect_defect (ROI_Rot, ImageRef, ImageChk, RegionsOfInterest, ImageChkRot, setOfcircle)</l>
+<c></c>
+<c>*end</c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

@@ -877,7 +877,7 @@ namespace ExecProcedures
                 inspectDefectProcCall.SetInputIconicParamObject("ImageChk", Image);
                 inspectDefectProcCall.SetInputIconicParamObject("ImageRef", (HObject)imgRefList[shot - 1]);
                 inspectDefectProcCall.SetInputIconicParamObject("ROI_Rot", (HObject)regionsRotList[shot-1]);
-                inspectDefectProcCall.SetInputIconicParamObject("RegionsRef", (HObject)regionsRefList[shot - 1]);
+                inspectDefectProcCall.SetInputIconicParamObject("RegionsOfInterest", (HObject)regionsRefList[shot - 1]);
                 inspectDefectProcCall.Execute();
                 HImage imgChk = Image;
                 Image = inspectDefectProcCall.GetOutputIconicParamImage("ImageChkRot");
