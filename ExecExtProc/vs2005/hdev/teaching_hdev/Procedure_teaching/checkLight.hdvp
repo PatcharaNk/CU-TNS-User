@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="checkLight">
+<interface>
+<io>
+<par name="RegionOfInterest" base_type="iconic" dimension="0"/>
+<par name="ImageChk" base_type="iconic" dimension="0"/>
+</io>
+<ic>
+<par name="refLight" base_type="ctrl" dimension="0"/>
+<par name="acceptDif" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="result" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<c>* get Interested Area of check image</c>
+<l>reduce_domain (ImageChk, RegionOfInterest, ImageReduced)</l>
+<c>* end get Interested Area of check image</c>
+<c></c>
+<c>* get check Image light value</c>
+<l>intensity (RegionOfInterest, ImageReduced, chkLight, Deviation1)</l>
+<c>* end get check Image light value</c>
+<c></c>
+<c>* find suitable light</c>
+<l>totalLight := abs(refLight-chkLight)</l>
+<c>    * reference image light = check image light</c>
+<l>    if (totalLight &lt;= acceptDif)</l>
+<l>*         dev_disp_text ('Light OK', 'window', 'top', 'left', 'green', [], [])</l>
+<l>        result := 0</l>
+<c>        </c>
+<c>    * reference image light &gt; check image light</c>
+<l>    elseif (refLight &gt; chkLight)</l>
+<l>*         dev_disp_text ('LOW LIGHT', 'window', 'top', 'left', 'red', [], [])</l>
+<l>        result := -1</l>
+<c>        </c>
+<c>    * reference image light &lt; check image light</c>
+<l>    else</l>
+<l>*         dev_disp_text ('HIGH LIGHT', 'window', 'top', 'left', 'red', [], [])</l>
+<l>        result := 1</l>
+<l>    endif</l>
+<c>* end find suitable light</c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="checkLight">
+<parameters>
+<parameter id="ImageChk"/>
+<parameter id="RegionOfInterest"/>
+<parameter id="acceptDif"/>
+<parameter id="refLight"/>
+<parameter id="result"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

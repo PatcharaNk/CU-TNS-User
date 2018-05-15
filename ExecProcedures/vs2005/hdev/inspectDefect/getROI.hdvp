@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="getROI">
+<interface>
+<oo>
+<par name="ROI_Rot" base_type="iconic" dimension="0"/>
+<par name="ROI_Chk" base_type="iconic" dimension="0"/>
+<par name="ROI_P" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="shot" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<c></c>
+<l>if(shot == 1)</l>
+<l>    gen_rectangle2 (ROI_0, 878.62, 677.187, rad(41.567), 377.636, 170.835)</l>
+<l>    gen_rectangle2 (TMP_Region, 286.78, 1864.68, rad(29.1846), 79.7333, 43.825)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_Rot)</l>
+<c></c>
+<l>*     gen_rectangle2 (ROI_0, 852.7, 1053.91, rad(39.3349), 1185.89, 138.139)</l>
+<l>*     gen_rectangle2 (TMP_Region, 1716.7, 243.14, rad(-30.6183), 195.085, 132.749)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_0)</l>
+<l>*     gen_rectangle2 (TMP_Region, 766.3, 820.505, rad(35.5986), 564.024, 155.236)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_Chk)</l>
+<c>    </c>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_Chk, 704.748, 1258.99, rad(-141.154), 1631.22, 413.415)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_P, 198.049, 1890.24, rad(-55.926), 221.814, 31.9927)</l>
+<c>    </c>
+<l>elseif(shot == 2)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_Rot, 869.98, 1979.33, rad(-41.6741), 350.854, 181.952)</l>
+<l>*     gen_rectangle2 (TMP_Region, 272.46, 759.083, rad(-31.8233), 81.9267, 40.1608)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_Rot)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_0, 887.26, 1541.19, rad(138.573), 1168.69, 150.596)</l>
+<l>    gen_rectangle2 (TMP_Region, 718.78, 1741.83, rad(-38.2839), 704.243, 191.201)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_0)</l>
+<l>    gen_rectangle2 (TMP_Region, 1669.18, 2417.47, rad(-88.9557), 224.677, 160.064)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_Chk)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_P, 132.854, 706.678, rad(-128.005), 173, 28.5862)</l>
+<c>    </c>
+<c></c>
+<l>elseif(shot == 3)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_0, 838.62, 677.187, rad(41.567), 377.636, 170.835)</l>
+<l>    gen_rectangle2 (TMP_Region, 266.78, 1874.68, rad(29.1846), 79.7333, 43.825)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_Rot)</l>
+<c></c>
+<l>*     gen_rectangle2 (ROI_0, 872.7, 1053.91, rad(39.3349), 1185.89, 138.139)</l>
+<l>*     gen_rectangle2 (TMP_Region, 1716.7, 243.14, rad(-30.6183), 195.085, 132.749)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_0)</l>
+<l>*     gen_rectangle2 (TMP_Region, 766.3, 820.505, rad(35.5986), 564.024, 155.236)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_Chk)</l>
+<c>    </c>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_Chk, 719.365, 1164.07, rad(-140.377), 1535.62, 371.532)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_P, 251.39, 1931.66, rad(-55.926), 221.814, 31.9927)</l>
+<c> </c>
+<l>elseif(shot == 4)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_Rot, 1309.71, 1030.16, rad(41.0082), 407.149, 174.015)</l>
+<l>*     gen_rectangle2 (TMP_Region, 246.763, 1773.12, rad(-45.4982), 39.8484, 67.7321)</l>
+<l>*     union2 (ROI_0, TMP_Region, ROI_Rot)</l>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_0, 940.237, 1091.6, rad(41.0647), 1185.45, 171.049)</l>
+<l>    gen_rectangle2 (TMP_Region, 1639.39, 153.121, rad(92.8131), 227.643, 117.701)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_0)</l>
+<l>    gen_rectangle2 (TMP_Region, 1275.61, 1024.57, rad(53.1129), 390.878, 182.703)</l>
+<l>    union2 (ROI_0, TMP_Region, ROI_Chk)</l>
+<c></c>
+<c>    </c>
+<l>    gen_rectangle2 (ROI_P, 203.976, 1878.4, rad(-55.926), 240.113, 37.6332)</l>
+<c>    </c>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="getROI">
+<parameters>
+<parameter id="ROI_Chk"/>
+<parameter id="ROI_P"/>
+<parameter id="ROI_Rot"/>
+<parameter id="shot"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

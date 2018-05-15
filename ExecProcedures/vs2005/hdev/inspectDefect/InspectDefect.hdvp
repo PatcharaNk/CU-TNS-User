@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="InspectDefect">
+<interface>
+<io>
+<par name="ImageChk" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="setOfcircle" base_type="iconic" dimension="1"/>
+<par name="ImageChkRot" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="shot" base_type="ctrl" dimension="0"/>
+<par name="typeChk" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>if(shot == 1)</l>
+<l>    read_image (ImageRef, 'C:/Users/Advantech/Desktop/CU-TNS_LightGuide_ver16-01-2018/ExecProcedures/vs2005/PicRef/Good_Shot1.tif')</l>
+<c>    </c>
+<l>elseif(shot == 2)</l>
+<l>    read_image (ImageRef, 'C:/Users/Advantech/Desktop/CU-TNS_LightGuide_ver16-01-2018/ExecProcedures/vs2005/PicRef/Good_Shot2.tif')</l>
+<c></c>
+<c>    </c>
+<l>elseif(shot == 3)</l>
+<l>    read_image (ImageRef, 'C:/Users/Advantech/Desktop/CU-TNS_LightGuide_ver16-01-2018/ExecProcedures/vs2005/PicRef/Good_Shot3.tif')</l>
+<c>    </c>
+<l>elseif(shot == 4)</l>
+<l>    read_image (ImageRef, 'C:/Users/Advantech/Desktop/CU-TNS_LightGuide_ver16-01-2018/ExecProcedures/vs2005/PicRef/Good_Shot4.tif')</l>
+<c>    </c>
+<l>endif</l>
+<c></c>
+<l>getROI (ROI_Rot, ROI_Chk, ROI_P, shot)</l>
+<c></c>
+<l>reduce_domain (ImageRef, ROI_Chk, ImageReducedRef)</l>
+<c></c>
+<l>getRegionInterest (ImageReducedRef, ROI_P, RegionsReduceRef, RegionErosionFullRef)</l>
+<c></c>
+<l>RotateChkImage (ROI_Rot, ImageRef, ImageChk, ImageChkRot)</l>
+<c></c>
+<c>*test Find region ImageChk</c>
+<l>* reduce_domain (ImageChkRot, ROI_Chk, ImageReducedChkRot)</l>
+<c></c>
+<l>* getRegionInterest (ImageReducedChkRot, ROI_P, RegionsReduceChk, RegionErosionFullChk)</l>
+<c></c>
+<l>FindDefect (ImageRef, RegionsReduceRef, ImageChkRot, RegionsReduceRef, ConnectedChk)</l>
+<l>CheckTypeDefect (ConnectedChk, outRegion)</l>
+<l>DisplayCircle (outRegion, ImageChkRot, Circle, setOfcircle, setOfSize)</l>
+<l>return ()</l>
+</body>
+<docu id="InspectDefect">
+<parameters>
+<parameter id="ImageChk"/>
+<parameter id="ImageChkRot"/>
+<parameter id="setOfcircle"/>
+<parameter id="shot"/>
+<parameter id="typeChk"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

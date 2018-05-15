@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="get_region_master">
+<interface>
+<oo>
+<par name="ROI_Rot" base_type="iconic" dimension="0"/>
+<par name="RegionsRef" base_type="iconic" dimension="0"/>
+<par name="ImageRef" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="shot" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>if(shot == 1)</l>
+<l>    read_image (ImageRef, '../../Picture/PicRef/Good_Shot1.tif')</l>
+<c>    </c>
+<l>elseif(shot == 2)</l>
+<l>    read_image (ImageRef, '../../Picture/PicRef/Good_Shot2.tif')</l>
+<c></c>
+<c>    </c>
+<l>elseif(shot == 3)</l>
+<l>    read_image (ImageRef, '../../Picture/PicRef/Good_Shot3.tif')</l>
+<c>    </c>
+<l>elseif(shot == 4)</l>
+<l>    read_image (ImageRef, '../../Picture/PicRef/Good_Shot4.tif')</l>
+<c>    </c>
+<l>endif</l>
+<c></c>
+<l>getROI (ROI_Rot, ROI_Chk, ROI_P, shot)</l>
+<c></c>
+<l>reduce_domain (ImageRef, ROI_Chk, ImageReducedRef)</l>
+<c></c>
+<l>getRegionInterest (ImageReducedRef, ROI_P, RegionsRef, RegionErosionFullRef)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="get_region_master">
+<parameters>
+<parameter id="ImageRef"/>
+<parameter id="ROI_Rot"/>
+<parameter id="RegionsRef"/>
+<parameter id="shot"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="inspect_defect">
+<interface>
+<io>
+<par name="ROI_Rot" base_type="iconic" dimension="0"/>
+<par name="ImageRef" base_type="iconic" dimension="0"/>
+<par name="ImageChk" base_type="iconic" dimension="0"/>
+<par name="RegionsRef" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="ImageChkRot" base_type="iconic" dimension="0"/>
+<par name="setOfcircle" base_type="iconic" dimension="1"/>
+</oo>
+</interface>
+<body>
+<l>RotateChkImage (ROI_Rot, ImageRef, ImageChk, ImageChkRot)</l>
+<c></c>
+<l>FindDefect (ImageRef, RegionsRef, ImageChkRot, RegionsRef, ConnectedChk)</l>
+<c></c>
+<l>CheckTypeDefect (ConnectedChk, outRegion)</l>
+<c></c>
+<l>DisplayCircle (outRegion, ImageChkRot, Circle, setOfcircle, setOfSize)</l>
+<l>return ()</l>
+</body>
+<docu id="inspect_defect">
+<parameters>
+<parameter id="ImageChk"/>
+<parameter id="ImageChkRot"/>
+<parameter id="ImageRef"/>
+<parameter id="ROI_Rot"/>
+<parameter id="RegionsRef"/>
+<parameter id="setOfcircle"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

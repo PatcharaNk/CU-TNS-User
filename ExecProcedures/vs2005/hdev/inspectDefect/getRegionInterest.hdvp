@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="getRegionInterest">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+<par name="ROI_P" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="SortedRegions" base_type="iconic" dimension="0"/>
+<par name="RegionErosionFull" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<c></c>
+<l>scale_image_max (Image, ImageScaleMax)</l>
+<l>rgb1_to_gray (ImageScaleMax, GrayImage)</l>
+<l>ImageOut := GrayImage</l>
+<l>paint_region (ROI_P, ImageOut, ImageOut, 0, 'fill')</l>
+<c></c>
+<l>equ_histo_image (ImageOut, ImageEquHisto)</l>
+<l>*gamma_image (ImageEquHisto, GammaImage, 0.35, 0.055, 0.0031308, 255, 'true')</l>
+<l>edges_image (ImageEquHisto, ImaAmp, ImaDir, 'canny', 2, 'nms', 20, 40)</l>
+<c></c>
+<l>threshold (ImaAmp, RegionEdge, 1, 255)</l>
+<c>   </c>
+<c></c>
+<l>dev_clear_window()</l>
+<l>binary_threshold (ImageOut, RegionBinary, 'max_separability', 'dark', UsedThreshold)</l>
+<l>    union2 (RegionEdge, RegionBinary, RegionUnion1)</l>
+<l>    union2 (RegionUnion1, ROI_P, RegionUnion2)</l>
+<l>closing_circle (RegionUnion2, RegionClosing, 5.5)</l>
+<l>connection (RegionClosing, ConnectedRegions)</l>
+<l>    fill_up (ConnectedRegions, RegionFillUp)</l>
+<l>    dev_clear_window()</l>
+<l>    select_shape (RegionFillUp, SelectedRegions, 'area', 'and', 50000, 999999)</l>
+<c>    </c>
+<l>    erosion_circle (SelectedRegions, RegionErosionFull, 4.5)</l>
+<c>    </c>
+<l>reduce_domain (ImageOut, RegionErosionFull, ImageReduced)</l>
+<l>    mean_image (ImageReduced, ImageMean1, 15, 15)</l>
+<c>    </c>
+<l>dyn_threshold (ImageReduced, ImageMean1, RegionDynThresh1, 10, 'dark')</l>
+<l>binary_threshold (ImageReduced, Region2, 'max_separability', 'dark', UsedThreshold1)</l>
+<l>union2 (RegionDynThresh1, Region2, RegionUnion3)</l>
+<l>    closing_circle (RegionUnion3, RegionClosing1, 5.5)</l>
+<l>*     opening_circle (RegionClosing1, RegionOpening, 1.5)</l>
+<l>    * dilation_circle (RegionOpening, RegionDilation, 2.5)</l>
+<l>* paint_region (RegionOpening, ImageReduced, ImageResult, 0, 'fill') </l>
+<c></c>
+<l>dilation_circle (RegionClosing1, RegionDilation, 2.5)</l>
+<l>paint_region (RegionClosing1, ImageReduced, ImageResult, 0, 'fill')</l>
+<c></c>
+<l>binary_threshold (ImageResult, Region3, 'max_separability', 'light', UsedThreshold2)</l>
+<l>connection (Region3, ConnectedRegions1)</l>
+<l>dev_clear_window ()</l>
+<l>select_shape (ConnectedRegions1, SelectedRegions1, 'area', 'and', 15000, 999999)</l>
+<l>closing_circle (SelectedRegions1, RegionI, 5.5)</l>
+<l>fill_up (RegionI, RegionFillUp1)</l>
+<l>sort_region (RegionFillUp1, SortedRegions, 'character', 'true', 'row')</l>
+<l>return ()</l>
+</body>
+<docu id="getRegionInterest">
+<parameters>
+<parameter id="Image"/>
+<parameter id="ROI_P"/>
+<parameter id="RegionErosionFull"/>
+<parameter id="SortedRegions"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

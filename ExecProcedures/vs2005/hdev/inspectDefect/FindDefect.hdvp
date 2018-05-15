@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="FindDefect">
+<interface>
+<io>
+<par name="ImageRef" base_type="iconic" dimension="0"/>
+<par name="ROI_Ref" base_type="iconic" dimension="0"/>
+<par name="ImageChkRot" base_type="iconic" dimension="0"/>
+<par name="ROI_Chk" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="ConnectedChk" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<c>*Ref</c>
+<l>*union1 (ROI_Ref, ROI_UnionRef)</l>
+<l>erosion_circle (ROI_Ref, ROI_Refchk, 5.5)</l>
+<l>reduce_domain (ImageRef, ROI_Refchk, ImageRefReduced)</l>
+<l>* gamma_image (ImageRefReduced, GammaImageRef, 0.416667, 0.055, 0.0031308, 255, 'true')</l>
+<l>* binary_threshold (ImageRefReduced, RegionRef, 'max_separability', 'dark', UsedThreshold)</l>
+<c></c>
+<l>gauss_filter (ImageRefReduced, ImageGauss, 9)   </l>
+<l>scale_image_max (ImageGauss, ImageScaleMax)</l>
+<l>mean_image (ImageScaleMax, ImageMean2, 15, 15)</l>
+<l>dyn_threshold (ImageScaleMax, ImageMean2, RegionDynThresh2, 10, 'dark')</l>
+<l>closing_circle (RegionDynThresh2, RegionClosing1, 7.5)</l>
+<l>connection (RegionClosing1, ConnectedRegions2)</l>
+<l>opening_circle (ConnectedRegions2, RegionOpening, 1.5)</l>
+<l>fill_up (RegionOpening, RegionRef)</l>
+<c></c>
+<c>*Interest</c>
+<c></c>
+<l>erosion_circle (ROI_Ref, ROI_Chk1, 5.5)</l>
+<l>reduce_domain (ImageChkRot, ROI_Chk1, ImageChkReduced)</l>
+<c></c>
+<l>gauss_filter (ImageChkReduced, ImageGaussChk, 9)   </l>
+<l>scale_image_max (ImageGaussChk, ImageScaleMaxChk)</l>
+<l>mean_image (ImageScaleMaxChk, ImageMeanChk, 15, 15)</l>
+<l>dyn_threshold (ImageScaleMaxChk, ImageMeanChk, RegionDynThreshChk, 10, 'dark')</l>
+<l>closing_circle (RegionDynThreshChk, RegionClosingChk, 3.5)</l>
+<l>fill_up (RegionClosingChk, RegionFillUpChk)</l>
+<l>connection (RegionFillUpChk, ConnectedRegionsChk)</l>
+<l>opening_circle (ConnectedRegionsChk, RegionOpeningChk, 1.5)</l>
+<l>fill_up (RegionOpeningChk, RegionChk)</l>
+<c></c>
+<c></c>
+<c>*dilation</c>
+<l>dilation_rectangle1 (RegionRef, RegionRefDilation, 15,15)</l>
+<c></c>
+<c>*connected component</c>
+<l>connection (RegionRefDilation, ConnectedRef)</l>
+<l>select_gray (ConnectedRef, ImageScaleMax, ConnectedRef, 'min', 'and', 0, 200)</l>
+<l>select_shape (ConnectedRef, ConnectedRef, 'area', 'and', 30, 99999)</l>
+<l>connection (RegionChk, ConnectedChk)</l>
+<l>select_gray (ConnectedChk, ImageScaleMaxChk, ConnectedChk, 'min', 'and', 0, 200)</l>
+<l>select_shape (ConnectedChk, ConnectedChk, 'area', 'and', 50, 99999)</l>
+<c>*intersect</c>
+<l>count_obj(ConnectedChk, Num)</l>
+<l>gen_empty_region(EmptyRegion)</l>
+<l>for i := 1 to Num by 1</l>
+<l>    select_obj (ConnectedChk, ObjectSelected, i)</l>
+<l>    difference (ObjectSelected, RegionRefDilation, ObjectSelectedDifference)</l>
+<l>    region_features (ObjectSelectedDifference, 'area', Area)</l>
+<c>    </c>
+<l>    intersection (ObjectSelected, RegionRefDilation, RegionIntersection)</l>
+<l>    test_equal_region (RegionIntersection, EmptyRegion, IsEqual)</l>
+<c>    </c>
+<l>    if(not IsEqual and Area&lt;=10)</l>
+<l>        difference (ConnectedChk, ObjectSelected, ConnectedChk)</l>
+<l>    endif</l>
+<c>    </c>
+<c></c>
+<c>    </c>
+<l>*     if (not IsEqual)</l>
+<l>*         difference (ConnectedChk, ObjectSelected, ConnectedChk)</l>
+<l>*     endif</l>
+<c>   </c>
+<l>endfor</l>
+<l>return ()</l>
+</body>
+<docu id="FindDefect">
+<parameters>
+<parameter id="ConnectedChk"/>
+<parameter id="ImageChkRot"/>
+<parameter id="ImageRef"/>
+<parameter id="ROI_Chk"/>
+<parameter id="ROI_Ref"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

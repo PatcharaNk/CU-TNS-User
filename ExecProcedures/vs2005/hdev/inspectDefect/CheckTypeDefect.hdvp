@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1.1">
+<procedure name="CheckTypeDefect">
+<interface>
+<io>
+<par name="ConnectedChk" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="outRegion" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<c></c>
+<l>fill_up (ConnectedChk, RegionFillUp)</l>
+<l>outRegion := RegionFillUp</l>
+<c></c>
+<l>*if (typeChk == 'Bubble')</l>
+<l>*    select_shape (ConnectedChk, OneHoleRegion, 'holes_num', 'and', 0.9018, 1)</l>
+<l>*    select_shape (OneHoleRegion, smallHoleAreaRegion, 'area_holes', 'and', 0, 1500)</l>
+<l>*    select_shape (smallHoleAreaRegion, outRegion, 'inner_radius', 'and', 0, 28)</l>
+<c>    </c>
+<l>*elseif (typeChk == 'BlackDot')</l>
+<l>*    select_shape (ConnectedChk, OneHoleRegion, 'holes_num', 'and', 0.9018, 1)</l>
+<l>*    select_shape (OneHoleRegion, smallHoleAreaRegion, 'area_holes', 'and', 0, 1500)</l>
+<l>*    select_shape (smallHoleAreaRegion, outRegionBub, 'inner_radius', 'and', 0, 28)</l>
+<l>*    select_shape (ConnectedChk, outRegionBD, 'area', 'and', 1, 10000)</l>
+<l>*    difference (outRegionBD, outRegionBub, outRegion)</l>
+<l>*    select_shape (outRegion, outRegion, 'area', 'and', 1, 10000)</l>
+<l>*endif</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="CheckTypeDefect">
+<parameters>
+<parameter id="ConnectedChk"/>
+<parameter id="outRegion"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1">
+<procedure name="DisplayCircle">
+<interface>
+<io>
+<par name="OutRegion" base_type="iconic" dimension="0"/>
+<par name="ImageChkRot" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="Circle" base_type="iconic" dimension="0"/>
+<par name="setOfcircle" base_type="iconic" dimension="1"/>
+</oo>
+<oc>
+<par name="setOfSize" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>setOfcircle := {}</l>
+<l>setOfSize := []</l>
+<l>setOfWidth := []</l>
+<l>union1 (OutRegion, RegionUnion)</l>
+<l>closing_circle (RegionUnion, RegionClosing, 19.5)</l>
+<l>connection (RegionClosing, ConnectedRegions)</l>
+<c></c>
+<l>area_center(ConnectedRegions, Area, Row, Column)</l>
+<l>region_features (ConnectedRegions, 'rb', Width)</l>
+<l>region_features (ConnectedRegions, 'ra', Height)</l>
+<l>region_features (ConnectedRegions, 'phi', Phi)</l>
+<c></c>
+<c>* Current graphics context settings:</c>
+<l>dev_set_color ('red')</l>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_line_width (2)</l>
+<l>dev_set_shape ('original')</l>
+<l>dev_set_lut ('default')</l>
+<l>dev_set_paint (['default'])</l>
+<c>* End of graphics context settings</c>
+<l>dev_clear_window()</l>
+<l>dev_display(ImageChkRot)</l>
+<l>for i:=0 to |Row|-1 by 1</l>
+<l>    if(Area[i] != 0 )</l>
+<l>*     gen_circle (Circle, Row[i], Column[i], 40)</l>
+<l>        gen_ellipse (Ellipse, Row[i], Column[i], Phi[i], Height[i]+35, Width[i]+25 )</l>
+<l>        tuple_insert (setOfWidth, i, Width[i]+25+Column[i], setOfWidth)</l>
+<l>        setOfcircle.insert(i,Ellipse)</l>
+<l>        tuple_insert (setOfSize, i, Area[i]*0.003093, setOfSize)</l>
+<l>        dev_display (Ellipse)</l>
+<l>    endif</l>
+<l>endfor</l>
+<l>return ()</l>
+</body>
+<docu id="DisplayCircle">
+<parameters>
+<parameter id="Circle"/>
+<parameter id="ImageChkRot"/>
+<parameter id="OutRegion"/>
+<parameter id="setOfSize"/>
+<parameter id="setOfcircle"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
